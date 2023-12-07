@@ -1,0 +1,3 @@
+(arp_spoofing security_cam0 n1)
+(port_attack security_cam0 light_sw0)
+; cost = 2 (unit cost)
