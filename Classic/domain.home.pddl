@@ -92,6 +92,7 @@
         )
     )
 
+    ; reconfigure firmwear attack
     (:action RFU_attack 
         :parameters (?dev1 ?dev2 - device)
         :precondition (and
@@ -104,6 +105,7 @@
         )
     )
 
+    ; break keys if they are privy to the connection
     (:action break_encrypted_keys
         :parameters (?dev1 ?dev2 - device)
         :precondition (and 
@@ -117,6 +119,7 @@
     )
     
 
+    ; gain access to device through open port
     (:action port_attack
         :parameters (?dev1 ?dev2 - device)
         :precondition (and 

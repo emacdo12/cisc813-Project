@@ -92,12 +92,14 @@ print(vuln_devices)
 
 device_str = "\n\t\t"
 
+
+# file and path locations
 new_file = "problem.home.pddl"
 folder_name = "Temporal\problem_files"
 
 file_name = os.path.join(folder_name,new_file)
 
-for j in range(num_vuln):
+for j in range(num_vuln): # generate a new problem file for each vulnerability
     file_name = os.path.join("Temporal\problem_files","promblem.home_g" + str(j) + ".pddl")
     file_name_c = os.path.join("Classic\problem_files","problem.homeC_g" + str(j)+ ".pddl")
 
@@ -132,6 +134,7 @@ for j in range(num_vuln):
 
         file.write("\n\t\t; assume all devices are disconnected")
 
+        ## Initialize all the objects, different types have unique characteristics
         file.write("\n\n\t\t; doorbell initialization")
         for i in range(num_doorbells):
             file.write("\n\t\t; doorbell " + str(i))
@@ -217,6 +220,7 @@ for j in range(num_vuln):
         file.write("\n\t\t;Vulnerability Initializaton\n")
 
         
+        # Gives each device a vulnerability according to their type and if they've been selected
         if(("doorbell" in vuln_devices[j]) | ("light_sw" in vuln_devices[j])):
             file.write("\n\t\t(does_encrypt " + vuln_devices[j] + ")" )
             file.write("\n\t\t(open_TCP_23_port " + vuln_devices[j]  + ")" )
@@ -234,6 +238,7 @@ for j in range(num_vuln):
         #     if(("printer" in device) |( "google_home" in device)):
         #         file.write("\n\t\t(no_auth_firmwear " + device + ")")
 
+        # Designates the initial compromised devices
         file.write("\n\n\t\t;initial compromised device")
         for i, device in enumerate(comp_devices):
             file.write("\n\t\t(is_compromised " + device + ")")
@@ -243,7 +248,7 @@ for j in range(num_vuln):
 
         # goal state
         file.write("\n\t(:goal (and\n")
-        file.write("\n\t\t(is_compromised " + vuln_devices[j] + ")")
+        file.write("\n\t\t(is_compromised " + vuln_devices[j] + ")") # compromise the vulnerable device
         file.write("\n\t\t(time_of_day pm11)")
 
         file.write("\n\t))")
@@ -251,6 +256,7 @@ for j in range(num_vuln):
 
     device_str = "\n\t\t"
 
+    # Same thing as before but classic model, so we don't need trigger information
     with open(file_name_c, 'w') as file_c:
         file_c.write("(define (problem pentesting)\n\t(:domain home_network)\n\t(:objects ")
 

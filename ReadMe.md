@@ -49,6 +49,9 @@ In this file, all that must be modified is num_compromised devices. Then the pla
 ### scale_problem_files.py
 This file is used to generate problem files for testing the scalability of popf and optic planners. It only creates temporal problem files. Lines 33 and 36 are the only ones that need to be changed. There is a multi_factor which determines how many machines are included in the problem file. The base is 10. So, if multi_factor = 2, total machines = 20. Additionally, it maintains a specific distribution of individual devices. Lastly, you can modify how many vulnerabilities are included as well. 
 
+## Bugs
+The problem files should generate okay the only thing that may cause an error if you set your requirements to 1 that is being changed because the code may expect an array. Currently, each file should run well as it is.
+
 ## Problem Files
 A problem file must be made for each vulnerability. This is because the goal state can't maximize the number of vulnerabilities it finds and if it can't accomplish 1 of the goal states (one vulnerable), the planner will not be able to formulate a plan even if it may exploit other vulnerabilities.
 

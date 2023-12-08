@@ -60,6 +60,7 @@ print("Compromised device (" + str(compromised_device) + ") " + all_devices[comp
 vuln_idx = np.zeros(num_vuln).astype(int)
 duplicate = False
 
+# randomly choose vulnerable devices 
 number_pool = [num for num in range(0, num_devices-1) if num != compromised_device]
 vuln_idx = random_numbers = random.sample(number_pool, num_vuln)
 

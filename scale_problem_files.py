@@ -27,19 +27,20 @@ SMART_SPEAKER_TRIG = 2
 
 #### Change the following to generate problem files
 #########################################################################################
-# compromised device
-num_compromised_device = 1
-# number of vulnerable devices (the rest)
+# number of vulnerable devices
 num_vuln = 5
 
 # distribution of IoT devices 
 multi_factor = 1
 ################################################################################
 
+# compromised device
+num_compromised_device = 1
+
 num_doorbells = 1 * multi_factor
 num_security_camera = 5 * multi_factor
 num_printers = 1 * multi_factor
-# num_google_homes = 2 * multi_factor
+# num_google_homes = 2 * multi_factor # get rid of google_homes to add more speakers, easier to compromise
 num_smart_speaker = 1 * multi_factor
 num_light_sw = 2 * multi_factor
 
@@ -100,6 +101,7 @@ print(vuln_devices)
 
 device_str = "\n\t\t"
 
+# file paths
 new_file = "promblem.home.pddl"
 folder_name = "Temporal\problem_files"
 
@@ -224,14 +226,8 @@ with open(file_name, 'w') as file:
 
     file.write("\n\t\t;Vulnerability Initializaton\n")
 
-    
-    if(("doorbell" in all_devices[vuln_idx]) | ("light_sw" in all_devices[vuln_idx])):
-        file.write("\n\t\t(does_encrypt " + all_devices[vuln_idx] + ")" )
-        file.write("\n\t\t(open_TCP_23_port " + all_devices[vuln_idx]  + ")" )
-    if(("security_cam" in all_devices[vuln_idx]) | ("speaker" in all_devices[vuln_idx])):
-        file.write("\n\t\t(has_pass " + all_devices[vuln_idx] + " weak_password)")
-    if(("printer" in all_devices[vuln_idx]) |( "google_home" in all_devices[vuln_idx])):
-        file.write("\n\t\t(no_auth_firmwear " + all_devices[vuln_idx] + ")")
+
+    # Initializing the vulnerabilities. Unique for each vulnerability
 
     for i in range(num_vuln):
         if(("doorbell" in vuln_devices[i]) | ("light_sw" in vuln_devices[i])):
@@ -250,6 +246,7 @@ with open(file_name, 'w') as file:
 
     # goal state
     file.write("\n\t(:goal (and\n")
+    # listing all vulnerabilities as goals
     for i in range(num_vuln):
         file.write("\n\t\t(is_compromised " + vuln_devices[i] + ")")
     file.write("\n\t\t(time_of_day pm11)")
